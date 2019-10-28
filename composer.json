@@ -1,0 +1,40 @@
+{
+    "name": "statikbe/craft-config-values",
+    "description": "Populate a field with values from the plugin's config",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "config values field"
+    ],
+    "support": {
+        "docs": "https://github.com/statikbe/craft-config-values/blob/master/README.md",
+        "issues": "https://github.com/statikbe/craft-config-values/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Henckens",
+            "email": "jan@statik.be"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "statikbe\\configvaluesfield\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Config Values Field",
+        "handle": "config-values-field",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/statikbe/craft-config-values/master/CHANGELOG.md",
+        "class": "statikbe\\configvaluesfield\\ConfigValuesField"
+    }
+}

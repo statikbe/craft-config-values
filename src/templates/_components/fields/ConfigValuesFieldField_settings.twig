@@ -1,0 +1,24 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Config Values Field plugin for Craft CMS
+ *
+ * ConfigValuesFieldField Field Settings
+ *
+ * @author    Statik.be
+ * @copyright Copyright (c) 2019 Statik.be
+ * @link      https://www.statik.be
+ * @package   ConfigValuesField
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+    label: "Select a data source",
+    instructions: "These options are pulled from the `data` array in `config/config-values-field.php`.<br> Only the first level of keys will be displayed here, these those `key/values` will be available on the entry that has this field."|raw,
+    name: 'dataSet',
+    options: data,
+    value: field['dataSet'] ?? '',
+}) }}

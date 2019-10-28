@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Config Values Field plugin for Craft CMS 3.x
+ *
+ * ConfigValuesFieldField Field Input
+ *
+ * @author    Statik.be
+ * @copyright Copyright (c) 2019 Statik.be
+ * @link      https://www.statik.be
+ * @package   ConfigValuesField
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.selectField({
+        name: name,
+        id: id,
+        options: options,
+        value: value
+}) }}
+
+
+
