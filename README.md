@@ -18,4 +18,6 @@ To install the plugin, follow these instructions.
         composer require statikbe/craft-config-values
 
 
+## Usage
+
 Brought to you by [Statik.be](https://www.statik.be)

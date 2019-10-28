@@ -15,10 +15,21 @@
 
 {% import "_includes/forms" as forms %}
 
+{% if not data %}
+    <div class="field">
+        <p class="warning">
+            {{ "No data sources configured. Check the <a href='https://github.com/statikbe/craft-config-values/blob/master/README.md#usage'>documentation</a> on how to get started."|raw }}
+        </p>
+    </div>
+{% endif %}
+
 {{ forms.selectField({
     label: "Select a data source",
     instructions: "These options are pulled from the `data` array in `config/config-values-field.php`.<br> Only the first level of keys will be displayed here, these those `key/values` will be available on the entry that has this field."|raw,
     name: 'dataSet',
     options: data,
     value: field['dataSet'] ?? '',
+    errors: field.getErrors('dataSet') ?? ''
 }) }}
+
+

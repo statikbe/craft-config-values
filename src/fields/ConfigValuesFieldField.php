@@ -57,7 +57,7 @@ class ConfigValuesFieldField extends Field
         $rules = parent::rules();
         $rules = array_merge($rules, [
             ['dataSet', 'string'],
-            ['dataSet', 'default'],
+            ['dataSet', 'required'],
         ]);
         return $rules;
     }
@@ -92,15 +92,10 @@ class ConfigValuesFieldField extends Field
     public function getSettingsHtml()
     {
         // Render the settings template
-        $keys = array_keys(ConfigValuesField::getInstance()->getSettings()->data);
-        $data[] = '---';
-        foreach ($keys as $key) {
-            $data[$key] = $key;
-        }
         return Craft::$app->getView()->renderTemplate(
             'config-values-field/_components/fields/ConfigValuesFieldField_settings',
             [
-                'data' => $data,
+                'data' => $this->getOptions(),
                 'field' => $this,
             ]
         );
@@ -127,5 +122,25 @@ class ConfigValuesFieldField extends Field
                 'id' => $id,
             ]
         );
+    }
+
+
+    /**
+     * Get our dataset options from the 'data' array key in config/config-values-field
+     * @return bool|array
+     */
+    private function getOptions()
+    {
+        $keys = array_keys(ConfigValuesField::getInstance()->getSettings()->data);
+        if (!$keys) {
+            return false;
+        }
+        $data[] = '---';
+
+        foreach ($keys as $key) {
+            $data[$key] = $key;
+        }
+        
+        return $data;
     }
 }
