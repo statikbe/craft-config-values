@@ -15,12 +15,21 @@
 
 {% import "_includes/forms" as forms %}
 
-{{ forms.selectField({
-        name: name,
-        id: id,
-        options: options,
-        value: value
-}) }}
+<div>{{ d(value) }}</div>
 
-
-
+{% switch type %}
+{% case "checkboxes" %}
+        {{ forms.checkboxGroup({
+                name: name,
+                id: id,
+                options: options,
+                values: value
+        }) }}
+{% default %}
+        {{ forms.selectField({
+                name: name,
+                id: id,
+                options: options,
+                value: value
+        }) }}
+{% endswitch %}
