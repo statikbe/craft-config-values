@@ -32,4 +32,16 @@
     errors: field.getErrors('dataSet') ?? ''
 }) }}
 
+{{ forms.selectField({
+    label: "How do you want to display the options?",
+    instructions: "Select how you want to display the data options."|raw,
+    name: 'type',
+    options: {
+        'dropdown': 'Dropdown',
+        'checkboxes': 'Checkboxes'
+    },
+    value: field['type'] ?? '',
+    errors: field.getErrors('type') ?? ''
+}) }}
+
 

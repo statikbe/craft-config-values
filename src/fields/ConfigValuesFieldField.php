@@ -34,6 +34,7 @@ class ConfigValuesFieldField extends Field
      * @var string
      */
     public $dataSet = '';
+    public $type = 'dropdown';
 
     // Static Methods
     // =========================================================================
@@ -58,6 +59,8 @@ class ConfigValuesFieldField extends Field
         $rules = array_merge($rules, [
             ['dataSet', 'string'],
             ['dataSet', 'required'],
+            ['type', 'string'],
+            ['type', 'required'],
         ]);
         return $rules;
     }
@@ -96,6 +99,7 @@ class ConfigValuesFieldField extends Field
             'config-values-field/_components/fields/ConfigValuesFieldField_settings',
             [
                 'data' => $this->getOptions(),
+                'type' => $this->type,
                 'field' => $this,
             ]
         );
@@ -116,6 +120,7 @@ class ConfigValuesFieldField extends Field
             'config-values-field/_components/fields/ConfigValuesFieldField_input',
             [
                 'name' => $this->handle,
+                'type' => $this->type,
                 'options' => $options,
                 'value' => $value,
                 'field' => $this,
@@ -140,7 +145,7 @@ class ConfigValuesFieldField extends Field
         foreach ($keys as $key) {
             $data[$key] = $key;
         }
-        
+
         return $data;
     }
 }
