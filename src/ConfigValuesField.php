@@ -10,6 +10,7 @@
 
 namespace statikbe\configvaluesfield;
 
+use craft\base\Model;
 use statikbe\configvaluesfield\fields\ConfigValuesFieldField as ConfigValuesFieldFieldField;
 
 use Craft;
@@ -46,7 +47,7 @@ class ConfigValuesField extends Plugin
     /**
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public string $schemaVersion = '1.0.0';
 
     // Public Methods
     // =========================================================================
@@ -74,7 +75,7 @@ class ConfigValuesField extends Plugin
 
     // Protected Methods
     // =========================================================================
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Model
     {
         return new Settings();
     }
