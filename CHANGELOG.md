@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.2 - 2023-02-15
+### Fixed
+- Fixed a bug where the value from the radio field was not showing
+
 ## 2.0.1 - 2023-02-15
 ### Added
 - Radio type option
