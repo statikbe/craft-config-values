@@ -23,6 +23,13 @@
                 options: options,
                 values: value
         }) }}
+{% case "radios" %}
+        {{ forms.radioGroup({
+                name: name,
+                id: id,
+                options: options,
+                values: value
+        }) }}
 {% default %}
         {{ forms.selectField({
                 name: name,
