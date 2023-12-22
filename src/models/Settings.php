@@ -14,7 +14,7 @@ use craft\base\Model;
 
 class Settings extends Model
 {
-    public $data = [];
+    public array $data = [];
 
-    public $type = "";
+    public string $type = "";
 }

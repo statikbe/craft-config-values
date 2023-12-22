@@ -29,12 +29,8 @@ class ConfigValuesFieldField extends Field
 {
     // Public Properties
     // =========================================================================
-
-    /**
-     * @var string
-     */
-    public $dataSet = '';
-    public $type = 'dropdown';
+    public string $dataSet = '';
+    public string $type = 'dropdown';
 
     // Static Methods
     // =========================================================================
@@ -68,7 +64,7 @@ class ConfigValuesFieldField extends Field
     /**
      * @inheritdoc
      */
-    public function getContentColumnType(): string
+    public static function dbType(): string
     {
         return Schema::TYPE_STRING;
     }
@@ -117,7 +113,7 @@ class ConfigValuesFieldField extends Field
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
-            'config-values-field/_components/fields/ConfigValuesFieldField_input',
+            'config-values-field/_components/fields/ConfigValuesFieldField_input.twig',
             [
                 'name' => $this->handle,
                 'type' => $this->type,
@@ -134,7 +130,7 @@ class ConfigValuesFieldField extends Field
      * Get our dataset options from the 'data' array key in config/config-values-field
      * @return bool|array
      */
-    private function getOptions()
+    private function getOptions(): array
     {
         $keys = array_keys(ConfigValuesField::getInstance()->getSettings()->data);
         if (!$keys) {
