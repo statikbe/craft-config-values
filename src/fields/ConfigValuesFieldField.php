@@ -10,15 +10,12 @@
 
 namespace statikbe\configvaluesfield\fields;
 
-use statikbe\configvaluesfield\ConfigValuesField;
-use statikbe\configvaluesfield\assetbundles\configvaluesfieldfieldfield\ConfigValuesFieldFieldFieldAsset;
-
 use Craft;
+
 use craft\base\ElementInterface;
 use craft\base\Field;
-use craft\helpers\Db;
+use statikbe\configvaluesfield\ConfigValuesField;
 use yii\db\Schema;
-use craft\helpers\Json;
 
 /**
  * @author    Statik.be

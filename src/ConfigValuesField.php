@@ -11,14 +11,11 @@
 namespace statikbe\configvaluesfield;
 
 use craft\base\Model;
-use statikbe\configvaluesfield\fields\ConfigValuesFieldField as ConfigValuesFieldFieldField;
-
-use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
-use craft\services\Fields;
+
 use craft\events\RegisterComponentTypesEvent;
+use craft\services\Fields;
+use statikbe\configvaluesfield\fields\ConfigValuesFieldField as ConfigValuesFieldFieldField;
 
 use statikbe\configvaluesfield\models\Settings;
 use yii\base\Event;
@@ -63,11 +60,10 @@ class ConfigValuesField extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ConfigValuesFieldFieldField::class;
             }
         );
-
     }
 
     // Protected Methods
