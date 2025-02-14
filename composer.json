@@ -1,56 +1,56 @@
 {
-    "name": "statikbe/craft-config-values",
-    "description": "Populate a field with values from the plugin's config",
-    "type": "craft-plugin",
-    "version": "5.0.0",
-    "keywords": [
-        "craft",
-        "cms",
-        "craftcms",
-        "craft-plugin",
-        "config values field"
-    ],
-    "support": {
-        "docs": "https://github.com/statikbe/craft-config-values/blob/master/README.md",
-        "issues": "https://github.com/statikbe/craft-config-values/issues"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Statik",
-            "homepage": "https://www.statik.be"
-        }
-    ],
-    "require": {
-        "craftcms/cms": "^5.0.0-beta.1"
-    },
-    "require-dev": {
-        "craftcms/ecs": "dev-main",
-        "craftcms/phpstan": "dev-main"
-    },
-    "scripts": {
-        "check-cs": "ecs check --ansi",
-        "fix-cs": "ecs check --ansi --fix",
-        "phpstan": "phpstan --memory-limit=1G",
-        "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
-    },
-    "autoload": {
-        "psr-4": {
-          "statikbe\\configvaluesfield\\": "src/"
-        }
-    },
-    "extra": {
-        "name": "Config Values Field",
-        "handle": "config-values-field",
-        "hasCpSettings": false,
-        "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/statikbe/craft-config-values/master/CHANGELOG.md",
-        "class": "statikbe\\configvaluesfield\\ConfigValuesField"
-    },
-    "config": {
-        "allow-plugins": {
-            "yiisoft/yii2-composer": true,
-            "craftcms/plugin-installer": true
-        }
+  "name": "statikbe/craft-config-values",
+  "description": "Populate a field with values from the plugin's config",
+  "type": "craft-plugin",
+  "version": "5.0.1",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "config values field"
+  ],
+  "support": {
+    "docs": "https://github.com/statikbe/craft-config-values/blob/master/README.md",
+    "issues": "https://github.com/statikbe/craft-config-values/issues"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Statik",
+      "homepage": "https://www.statik.be"
     }
+  ],
+  "require": {
+    "craftcms/cms": "^5.0.0-beta.1"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main"
+  },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G",
+    "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
+  },
+  "autoload": {
+    "psr-4": {
+      "statikbe\\configvaluesfield\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "Config Values Field",
+    "handle": "config-values-field",
+    "hasCpSettings": false,
+    "hasCpSection": false,
+    "changelogUrl": "https://raw.githubusercontent.com/statikbe/craft-config-values/master/CHANGELOG.md",
+    "class": "statikbe\\configvaluesfield\\ConfigValuesField"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  }
 }

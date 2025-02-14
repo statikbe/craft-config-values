@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.1 - 2025-02-14
+### Added
+- Implement correct interfaces on field so it displays in overview grid and use type text so the value can be longer
+
 ## 5.0.0 - 2024-03-12
 ### Added
 - Craft 5 release 🚀

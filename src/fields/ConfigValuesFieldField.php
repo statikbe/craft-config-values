@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Config Values Field plugin for Craft CMS 3.x
  *
@@ -10,19 +11,19 @@
 
 namespace statikbe\configvaluesfield\fields;
 
-use Craft;
-
-use craft\base\ElementInterface;
-use craft\base\Field;
 use statikbe\configvaluesfield\ConfigValuesField;
-use yii\db\Schema;
+use Craft;
+use craft\base\ElementInterface;
+use craft\base\InlineEditableFieldInterface;
+use craft\base\SortableFieldInterface;
+use craft\base\Field;
 
 /**
  * @author    Statik.be
  * @package   ConfigValuesField
  * @since     1.0.0
  */
-class ConfigValuesFieldField extends Field
+class ConfigValuesFieldField extends Field implements InlineEditableFieldInterface, SortableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -40,13 +41,21 @@ class ConfigValuesFieldField extends Field
         return Craft::t('config-values-field', 'Config values');
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function phpType(): string
+    {
+        return 'string|null';
+    }
+
     // Public Methods
     // =========================================================================
 
     /**
      * @inheritdoc
      */
-    public function rules(): array
+    public function defineRules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, [
@@ -56,14 +65,6 @@ class ConfigValuesFieldField extends Field
             ['type', 'required'],
         ]);
         return $rules;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function dbType(): string
-    {
-        return Schema::TYPE_STRING;
     }
 
     /**
@@ -129,6 +130,7 @@ class ConfigValuesFieldField extends Field
      */
     private function getOptions(): array
     {
+        $data = [];
         $keys = array_keys(ConfigValuesField::getInstance()->getSettings()->data);
         if (!$keys) {
             return false;
