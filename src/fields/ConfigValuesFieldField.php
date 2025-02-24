@@ -57,7 +57,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
      */
     public function defineRules(): array
     {
-        $rules = parent::rules();
+        $rules = parent::defineRules();
         $rules = array_merge($rules, [
             ['dataSet', 'string'],
             ['dataSet', 'required'],
