@@ -17,24 +17,66 @@
 
 {% switch type %}
 {% case "checkboxes" %}
-        {{ forms.checkboxGroup({
-                name: name,
-                id: id,
-                options: options,
-                values: value
-        }) }}
+    {{ forms.checkboxGroup({
+        name: name,
+        id: id,
+        options: options,
+        values: value
+    }) }}
 {% case "radios" %}
-        {{ forms.radioGroup({
-                name: name,
-                id: id,
-                options: options,
-                value: value
-        }) }}
+    {{ forms.radioGroup({
+        name: name,
+        id: id,
+        options: options,
+        value: value
+    }) }}
+{% case "color" %}
+
+    {# Ensure option for random color #}
+    <div class="radio-group">
+        {% for option, label in options %}
+            {% switch label|length %}
+            {% case 2 %}
+                {% set style = "background: linear-gradient(135deg, " ~ label|first ~ " 0%," ~ label|first ~ " 65%, " ~ label|last ~" 65%, " ~label|last ~ " 100%);" %}
+            {% case 3 %}
+                {% set style = "background-color: " ~ label|first ~ "; background-image: linear-gradient(0deg, " ~ label[1] ~ " 0%, " ~label[1] ~ " 100%), linear-gradient(0deg, " ~ label[2] ~ " 0%, " ~label[2] ~ " 100%); background-repeat: no-repeat; background-size: 50% 35%; background-position: left bottom, right bottom; " %}
+            {% default %}
+                {% set style = "background-color: " ~ label|first ~ ";" %}
+            {% endswitch %}
+            <input type="radio" id="{{ id }}-{{ option ?? 'none' }}" name="{{ name }}" value="{{ option }}"
+                   class="sr-only"
+                   {% if value == option %}checked{% elseif not value and loop.index == 1 %}checked{% endif %} >
+            <label for="{{ id }}-{{ option ?? 'none' }}">
+                <span class="custom-color-label" style="{{ style }}"></span>
+            </label>
+        {% endfor %}
+    </div>
+{% case 'shape' %}
+    <div class="cutout-btngroup">
+
+    {% for option, label in options["shapes"] %}
+        {% if label|length %}
+            <div>
+                <input type="radio" id="{{ id }}-{{ option ?? 'none' }}" name="{{ name }}" value="{{ option }}"
+                       class="sr-only"
+                       {% if value == option %}checked{% elseif not value and loop.index == 1 %}checked{% endif %} >
+                <label for="{{ id }}-{{ option ?? 'none' }}" class="" title="{{ label }}">
+                    <span class="btn cutout-btn">
+                        {% if option|length %}
+                            {{ svg(options["path"] ~ option ~ '.svg') }}
+                        {% endif %}
+                    </span>
+                </label>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
 {% default %}
-        {{ forms.selectField({
-                name: name,
-                id: id,
-                options: options,
-                value: value
-        }) }}
+    {{ forms.selectField({
+        name: name,
+        id: id,
+        options: options,
+        value: value
+    }) }}
 {% endswitch %}

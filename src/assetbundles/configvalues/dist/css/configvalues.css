@@ -1,0 +1,100 @@
+
+.radio-group:has(.custom-color-label) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.radio-group:has(.custom-color-label) label::before,
+.radio-group:has(.custom-color-label) label::after {
+    display: none;
+}
+
+body.ltr .radio-group:has(.custom-color-label) label {
+    padding: 0;
+}
+
+.radio-group:has(.custom-color-label) input:checked + label .custom-color-label {
+    border: 2px solid #ffffff;
+    outline: 2px solid #555555;
+}
+
+.custom-color-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    margin: 3px 3px 0 3px;
+    border-radius: 100%;
+    border: 1px solid #cccccc;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.btn.cutout-btn {
+    padding: 0;
+    width: 50px;
+    height: 50px;
+}
+
+.cutout-btn svg {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    color: #616c77;
+}
+
+.cutout-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.cutout-btngroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: auto;
+    gap: 4px;
+}
+
+.cutout-btngroup input[type='radio'] + label {
+    display: flex;
+}
+
+.cutout-btngroup input[type='radio'] + label .btn.cutout-btn {
+    background: #e6ecf5;
+    border-radius: 0;
+    border: 1px solid #f4f7fc;
+}
+
+.cutout-btngroup > div:first-of-type input[type='radio'] + label .btn.cutout-btn {
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.cutout-btngroup > div:last-of-type input[type='radio'] + label .btn.cutout-btn {
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+/* Hover */
+.cutout-btngroup input[type='radio'] + label .btn.cutout-btn:focus,
+.cutout-btngroup input[type='radio'] + label .btn.cutout-btn:hover {
+    background: #d2dae5 !important;
+}
+
+/* Active */
+.cutout-btngroup input[type='radio']:checked + label .btn.cutout-btn {
+    background: #bcc8d9;
+}
