@@ -11,6 +11,8 @@
 
 namespace statikbe\configvaluesfield\fields;
 
+use craft\helpers\App;
+use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
 use statikbe\configvaluesfield\ConfigValuesField;
 use Craft;
 use craft\base\ElementInterface;
@@ -29,6 +31,12 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
     // =========================================================================
     public string $dataSet = '';
     public string $type = 'dropdown';
+
+    const TYPE_DROPDOWN = 'dropdown';
+    const TYPE_RADIO = 'radios';
+    const TYPE_CHECKBOX = 'checkboxes';
+    const TYPE_COLOR = 'color';
+    const TYPE_SHAPE = 'shape';
 
     // Static Methods
     // =========================================================================
@@ -63,8 +71,72 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
             ['dataSet', 'required'],
             ['type', 'string'],
             ['type', 'required'],
+            ['type', 'dataShouldMatchType']
         ]);
         return $rules;
+    }
+
+    public function dataShouldMatchType($attribute, $params): void
+    {
+        $data = ConfigValuesField::getInstance()->getSettings()->data[$this->dataSet];
+        switch ($this->type) {
+            case self::TYPE_DROPDOWN:
+            case self::TYPE_RADIO:
+            case self::TYPE_CHECKBOX:
+                foreach ($data as $key => $value) {
+                    if (is_array($value)) {
+                        $this->addError("$attribute", 'Each option must be a string when type is "dropdown", "radio" or "checkbox". is selected');
+                        return;
+                    }
+                }
+                break;
+            case self::TYPE_COLOR:
+                foreach ($data as $key => $option) {
+                    if (is_array($option)) {
+                        foreach ($option as $value) {
+                            if (strpos($value, '#') !== 0) {
+                                $this->addError("$attribute", "Each option must contain at least hex value when type is 'color'");
+                                return;
+                            }
+                        }
+                    } else {
+                        if(!in_array($option, ['random', 'none'])) {
+                            $this->addError("$attribute", "Each option should either contain a hex value, 'random' or 'none' when type is 'color'");
+                            return;
+                        }
+                    }
+                }
+                break;
+
+            case self::TYPE_SHAPE:
+                if(!isset($data['path'])) {
+                    $this->addError("$attribute", "A valid path must be configured when type is 'shape'");
+                }
+
+                if(isset($data['path'])) {
+                    $path = App::parseEnv($data['path']);
+                    if(!is_dir($path)) {
+                        $this->addError("$attribute", "The path to the shapes must be a valid directory");
+                    }
+                }
+
+                if(!isset($data['shapes'])) {
+                    $this->addError("$attribute", "A set of 'shapes' must be configured when type is 'shape'");
+                }
+
+                if(isset($data['shapes']) && isset($data['path'])) {
+                    $path = App::parseEnv($data['path']);
+                    foreach($data['shapes'] as $filename => $value) {
+                        $filepath = $path . $filename . '.svg';
+                        if(!file_exists($filepath)) {
+                            $this->addError("$attribute", "The file $filename.svg does not exist in the configured path");
+                        }
+                    }
+                }
+                break;
+            default:
+                $this->addError($attribute, 'Invalid type.');
+        }
     }
 
     /**
@@ -110,6 +182,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
         $options = ConfigValuesField::getInstance()->getSettings()->data[$this->dataSet];
 
         // Render the input template
+        Craft::$app->getView()->registerAssetBundle(ConfigValuesAsset::class);
         return Craft::$app->getView()->renderTemplate(
             'config-values-field/_components/fields/ConfigValuesFieldField_input.twig',
             [
