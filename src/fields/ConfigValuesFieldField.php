@@ -107,33 +107,32 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                     }
                 }
                 break;
+
             case self::TYPE_SHAPE:
                 if(!isset($data['path'])) {
                     $this->addError("$attribute", "A valid path must be configured when type is 'shape'");
-                    return;
                 }
+
                 if(isset($data['path'])) {
                     $path = App::parseEnv($data['path']);
                     if(!is_dir($path)) {
                         $this->addError("$attribute", "The path to the shapes must be a valid directory");
-                        return;
                     }
                 }
+
                 if(!isset($data['shapes'])) {
                     $this->addError("$attribute", "A set of 'shapes' must be configured when type is 'shape'");
-                    return;
                 }
-                if(isset($data['shapes'])) {
+
+                if(isset($data['shapes']) && isset($data['path'])) {
                     $path = App::parseEnv($data['path']);
                     foreach($data['shapes'] as $filename => $value) {
                         $filepath = $path . $filename . '.svg';
                         if(!file_exists($filepath)) {
                             $this->addError("$attribute", "The file $filename.svg does not exist in the configured path");
-                            return;
                         }
                     }
                 }
-
                 break;
             default:
                 $this->addError($attribute, 'Invalid type.');
