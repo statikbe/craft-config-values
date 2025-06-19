@@ -5,6 +5,11 @@ Populate field options from a centralized configuration file, providing consiste
 ## Requirements
 This plugin requires Craft CMS 5.0.0 or later.
 
+## Features
+
+![CleanShot 2025-06-19 at 16 53 21](https://github.com/user-attachments/assets/dc8c3c42-e72f-4414-89be-1e5b677be020)
+
+
 ## Installation
 
 1. Open your terminal and go to your Craft project:
