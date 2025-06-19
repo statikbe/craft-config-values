@@ -17,24 +17,78 @@
 
 {% switch type %}
 {% case "checkboxes" %}
-        {{ forms.checkboxGroup({
-                name: name,
-                id: id,
-                options: options,
-                values: value
-        }) }}
+    {{ forms.checkboxGroup({
+        name: name,
+        id: id,
+        options: options,
+        values: value
+    }) }}
 {% case "radios" %}
-        {{ forms.radioGroup({
-                name: name,
-                id: id,
-                options: options,
-                value: value
-        }) }}
+    {{ forms.radioGroup({
+        name: name,
+        id: id,
+        options: options,
+        value: value
+    }) }}
+{% case "color" %}
+
+    {# Ensure option for random color #}
+    <div class="radio-group">
+        {% for option, label in options %}
+            {% switch label|length %}
+            {% case 2 %}
+                {% set style = "background: linear-gradient(135deg, " ~ label|first ~ " 0%," ~ label|first ~ " 65%, " ~ label|last ~" 65%, " ~label|last ~ " 100%);" %}
+            {% case 3 %}
+                {% set style = "background-color: " ~ label|first ~ "; background-image: linear-gradient(0deg, " ~ label[1] ~ " 0%, " ~label[1] ~ " 100%), linear-gradient(0deg, " ~ label[2] ~ " 0%, " ~label[2] ~ " 100%); background-repeat: no-repeat; background-size: 50% 35%; background-position: left bottom, right bottom; " %}
+            {% default %}
+                {% if label == 'none' %}
+                    {% set style = "background-color: transparent; background-image: linear-gradient(-45deg, transparent 0%, transparent 45%, #ddd 45%, #ddd 55%, transparent 55%, transparent 100%);" %}
+                {% elseif label == 'random' %}
+                    {% set style = "background: conic-gradient(violet 51deg,indigo 51deg,indigo 103deg,blue 103deg,blue 154deg,green 154deg,green 206deg,yellow 206deg,yellow 257deg,orange 257deg,orange 309deg,red 309deg,red 360deg);" %}
+                {% else %}
+                    {% set style = "background-color: " ~ label|first ~ ";" %}
+                {% endif %}
+            {% endswitch %}
+            <input type="radio" id="{{ id }}-{{ option ?? 'none' }}" name="{{ name }}" value="{{ option }}"
+                   class="sr-only"
+                   {% if value == option %}checked{% elseif not value and loop.index == 1 %}checked{% endif %} >
+            <label for="{{ id }}-{{ option ?? 'none' }}">
+                <span class="custom-color-label" style="{{ style }}" {% if label in ['none', 'random'] %}title="{{ label }}"{% endif %}></span>
+            </label>
+        {% endfor %}
+    </div>
+{% case 'shape' %}
+    <div class="cutout-btngroup">
+
+        {% for option, label in options["shapes"] %}
+            {% if label|length %}
+                <div>
+                    <input type="radio" id="{{ id }}-{{ option ?? 'none' }}" name="{{ name }}" value="{{ option }}"
+                           class="sr-only"
+                           {% if value == option %}checked{% elseif not value and loop.index == 1 %}checked{% endif %} >
+                    <label for="{{ id }}-{{ option ?? 'none' }}" class="" title="{{ label }}">
+                    <span class="btn cutout-btn" style="padding: 5px;">
+                        {% if option|length %}
+                            {% if label == 'random' %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                                     viewBox="0 0 256 256"><path
+                                            d="M237.66,178.34a8,8,0,0,1,0,11.32l-24,24a8,8,0,0,1-11.32-11.32L212.69,192H200.94a72.12,72.12,0,0,1-58.59-30.15l-41.72-58.4A56.1,56.1,0,0,0,55.06,80H32a8,8,0,0,1,0-16H55.06a72.12,72.12,0,0,1,58.59,30.15l41.72,58.4A56.1,56.1,0,0,0,200.94,176h11.75l-10.35-10.34a8,8,0,0,1,11.32-11.32ZM143,107a8,8,0,0,0,11.16-1.86l1.2-1.67A56.1,56.1,0,0,1,200.94,80h11.75L202.34,90.34a8,8,0,0,0,11.32,11.32l24-24a8,8,0,0,0,0-11.32l-24-24a8,8,0,0,0-11.32,11.32L212.69,64H200.94a72.12,72.12,0,0,0-58.59,30.15l-1.2,1.67A8,8,0,0,0,143,107Zm-30,42a8,8,0,0,0-11.16,1.86l-1.2,1.67A56.1,56.1,0,0,1,55.06,176H32a8,8,0,0,0,0,16H55.06a72.12,72.12,0,0,0,58.59-30.15l1.2-1.67A8,8,0,0,0,113,149Z"></path></svg>
+                            {% else %}
+                                {{ svg(options["path"] ~ option ~ '.svg') }}
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                    </label>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
 {% default %}
-        {{ forms.selectField({
-                name: name,
-                id: id,
-                options: options,
-                value: value
-        }) }}
+    {{ forms.selectField({
+        name: name,
+        id: id,
+        options: options,
+        value: value
+    }) }}
 {% endswitch %}
