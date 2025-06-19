@@ -17,4 +17,5 @@ class Settings extends Model
     public array $data = [];
 
     public string $type = "";
+
 }
