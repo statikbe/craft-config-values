@@ -20,6 +20,7 @@ use craft\helpers\App;
 use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
 use statikbe\configvaluesfield\ConfigValuesField;
 
+
 /**
  * @author    Statik.be
  * @package   ConfigValuesField
@@ -215,5 +216,10 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
         }
 
         return $data;
+    }
+
+    public function getElementConditionRuleType(): array|string|null
+    {
+        return ConfigValuesFieldConditionRule::class;
     }
 }
