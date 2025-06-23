@@ -18,8 +18,8 @@ use craft\base\InlineEditableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\helpers\App;
 use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
+use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
 use statikbe\configvaluesfield\ConfigValuesField;
-
 
 /**
  * @author    Statik.be
