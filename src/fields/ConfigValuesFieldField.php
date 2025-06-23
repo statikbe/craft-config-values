@@ -17,6 +17,7 @@ use craft\base\ElementInterface;
 use craft\base\InlineEditableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\base\Field;
+use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
 
 /**
  * @author    Statik.be
@@ -142,5 +143,10 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
         }
 
         return $data;
+    }
+
+    public function getElementConditionRuleType(): array|string|null
+    {
+        return ConfigValuesFieldConditionRule::class;
     }
 }
