@@ -11,7 +11,7 @@ class ConfigValuesAsset extends AssetBundle
         $this->sourcePath = "@statikbe/configvaluesfield/assetbundles/configvalues/dist";
 
         $this->css = [
-            'css/configvalues.css'
+            'css/configvalues.css',
         ];
         parent::init();
     }

@@ -11,14 +11,15 @@
 
 namespace statikbe\configvaluesfield\fields;
 
-use craft\helpers\App;
-use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
-use statikbe\configvaluesfield\ConfigValuesField;
 use Craft;
 use craft\base\ElementInterface;
+use craft\base\Field;
 use craft\base\InlineEditableFieldInterface;
 use craft\base\SortableFieldInterface;
-use craft\base\Field;
+use craft\helpers\App;
+use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
+use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
+use statikbe\configvaluesfield\ConfigValuesField;
 
 /**
  * @author    Statik.be
@@ -32,11 +33,11 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
     public string $dataSet = '';
     public string $type = 'dropdown';
 
-    const TYPE_DROPDOWN = 'dropdown';
-    const TYPE_RADIO = 'radios';
-    const TYPE_CHECKBOX = 'checkboxes';
-    const TYPE_COLOR = 'color';
-    const TYPE_SHAPE = 'shape';
+    public const TYPE_DROPDOWN = 'dropdown';
+    public const TYPE_RADIO = 'radios';
+    public const TYPE_CHECKBOX = 'checkboxes';
+    public const TYPE_COLOR = 'color';
+    public const TYPE_SHAPE = 'shape';
 
     // Static Methods
     // =========================================================================
@@ -71,7 +72,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
             ['dataSet', 'required'],
             ['type', 'string'],
             ['type', 'required'],
-            ['type', 'dataShouldMatchType']
+            ['type', 'dataShouldMatchType'],
         ]);
         return $rules;
     }
@@ -100,7 +101,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                             }
                         }
                     } else {
-                        if(!in_array($option, ['random', 'none'])) {
+                        if (!in_array($option, ['random', 'none'])) {
                             $this->addError("$attribute", "Each option should either contain a hex value, 'random' or 'none' when type is 'color'");
                             return;
                         }
@@ -109,26 +110,26 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                 break;
 
             case self::TYPE_SHAPE:
-                if(!isset($data['path'])) {
+                if (!isset($data['path'])) {
                     $this->addError("$attribute", "A valid path must be configured when type is 'shape'");
                 }
 
-                if(isset($data['path'])) {
+                if (isset($data['path'])) {
                     $path = App::parseEnv($data['path']);
-                    if(!is_dir($path)) {
+                    if (!is_dir($path)) {
                         $this->addError("$attribute", "The path to the shapes must be a valid directory");
                     }
                 }
 
-                if(!isset($data['shapes'])) {
+                if (!isset($data['shapes'])) {
                     $this->addError("$attribute", "A set of 'shapes' must be configured when type is 'shape'");
                 }
 
-                if(isset($data['shapes']) && isset($data['path'])) {
+                if (isset($data['shapes']) && isset($data['path'])) {
                     $path = App::parseEnv($data['path']);
-                    foreach($data['shapes'] as $filename => $value) {
+                    foreach ($data['shapes'] as $filename => $value) {
                         $filepath = $path . $filename . '.svg';
-                        if(!file_exists($filepath)) {
+                        if (!file_exists($filepath)) {
                             $this->addError("$attribute", "The file $filename.svg does not exist in the configured path");
                         }
                     }
@@ -215,5 +216,10 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
         }
 
         return $data;
+    }
+
+    public function getElementConditionRuleType(): array|string|null
+    {
+        return ConfigValuesFieldConditionRule::class;
     }
 }
