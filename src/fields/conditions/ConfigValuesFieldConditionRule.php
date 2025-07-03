@@ -2,10 +2,10 @@
 
 namespace statikbe\configvaluesfield\fields\conditions;
 
-use statikbe\configvaluesfield\ConfigValuesField;
 use craft\base\conditions\BaseMultiSelectConditionRule;
 use craft\fields\conditions\FieldConditionRuleInterface;
 use craft\fields\conditions\FieldConditionRuleTrait;
+use statikbe\configvaluesfield\ConfigValuesField;
 use statikbe\configvaluesfield\fields\ConfigValuesFieldField;
 use yii\base\InvalidConfigException;
 

@@ -3,9 +3,18 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
-## 5.2.0 - 2025-02-14
-### Feature
+
+## 5.2.1 - 2025-07-03
+### Fixed
+- Fixed validation error for random value when working with shapes
+
+## 5.2.0 - 2025-06-23
+### Added
 - Allow filtering for config value fields in the control panel
+
+## 5.1.0 - 2025-06-19
+### Added
+- Added support for single, double and triple color values, and shapes.
 
 ## 5.0.2 - 2025-02-14
 ### Fixed

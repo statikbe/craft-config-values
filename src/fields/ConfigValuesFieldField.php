@@ -18,8 +18,8 @@ use craft\base\InlineEditableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\helpers\App;
 use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
-use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
 use statikbe\configvaluesfield\ConfigValuesField;
+use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
 
 /**
  * @author    Statik.be
@@ -128,6 +128,9 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                 if (isset($data['shapes']) && isset($data['path'])) {
                     $path = App::parseEnv($data['path']);
                     foreach ($data['shapes'] as $filename => $value) {
+                        if (in_array($filename, ['random', ''])) {
+                            continue; // Skip 'random' as it is not a file
+                        }
                         $filepath = $path . $filename . '.svg';
                         if (!file_exists($filepath)) {
                             $this->addError("$attribute", "The file $filename.svg does not exist in the configured path");
