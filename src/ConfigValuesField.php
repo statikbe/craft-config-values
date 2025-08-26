@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Config Values Field plugin for Craft CMS 3.x
  *
@@ -10,13 +11,14 @@
 
 namespace statikbe\configvaluesfield;
 
+use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
-
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use craft\services\Sites;
+use craft\web\Request;
 use statikbe\configvaluesfield\fields\ConfigValuesFieldField as ConfigValuesFieldFieldField;
-
 use statikbe\configvaluesfield\models\Settings;
 use yii\base\Event;
 
@@ -57,13 +59,15 @@ class ConfigValuesField extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Event::on(
-            Fields::class,
-            Fields::EVENT_REGISTER_FIELD_TYPES,
-            function(RegisterComponentTypesEvent $event) {
-                $event->types[] = ConfigValuesFieldFieldField::class;
-            }
-        );
+        Craft::$app->onInit(function () {
+            Event::on(
+                Fields::class,
+                Fields::EVENT_REGISTER_FIELD_TYPES,
+                function (RegisterComponentTypesEvent $event) {
+                    $event->types[] = ConfigValuesFieldFieldField::class;
+                }
+            );
+        });
     }
 
     // Protected Methods
@@ -74,5 +78,39 @@ class ConfigValuesField extends Plugin
     protected function createSettingsModel(): Model
     {
         return new Settings();
+    }
+
+    public function getSiteSpecificOptions(string $dataSetKey): array
+    {
+        /** @var Sites $sites */
+        $sites = Craft::$app->sites;
+        /** @var Request $request */
+        $request = Craft::$app->getRequest();
+
+        $requestedSiteHandle = $request->getQueryParam('site');
+
+        $primarySiteHandle = $sites->primarySite->handle;
+        if ($requestedSiteHandle) {
+            $site = $sites->getSiteByHandle($requestedSiteHandle);
+        } else {
+            $site = $sites->currentSite;
+        }
+        $siteHandle = $site ? $site->handle : $primarySiteHandle;
+
+        $settings = $this->getSettings()->data;
+        $settings = $settings[$dataSetKey] ?? [];
+
+        // INFO: if no primary site or current site handle is present in the config we assume no site specific settings
+        if (!isset($settings[$primarySiteHandle]) && !isset($settings[$siteHandle])) {
+            return $settings;
+        }
+
+        // INFO: IF we have a site specific config we return it
+        if (isset($settings[$siteHandle])) {
+            return $settings[$siteHandle];
+        }
+
+        // INFO: In this case we have site specific settings but not for the current site
+        return $settings[$primarySiteHandle];
     }
 }

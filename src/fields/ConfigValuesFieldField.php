@@ -18,8 +18,8 @@ use craft\base\InlineEditableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\helpers\App;
 use statikbe\configvaluesfield\assetbundles\configvalues\ConfigValuesAsset;
-use statikbe\configvaluesfield\ConfigValuesField;
 use statikbe\configvaluesfield\fields\conditions\ConfigValuesFieldConditionRule;
+use statikbe\configvaluesfield\ConfigValuesField;
 
 /**
  * @author    Statik.be
@@ -183,7 +183,8 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
 
         // Get our id and namespace
         $id = Craft::$app->getView()->formatInputId($this->handle);
-        $options = ConfigValuesField::getInstance()->getSettings()->data[$this->dataSet];
+
+        $options = ConfigValuesField::getInstance()->getSiteSpecificOptions($this->dataSet);
 
         // Render the input template
         Craft::$app->getView()->registerAssetBundle(ConfigValuesAsset::class);

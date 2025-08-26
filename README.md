@@ -3,26 +3,29 @@
 Populate field options from a centralized configuration file, providing consistent predefined values across multiple fields without hardcoding them into individual field settings.
 
 ## Requirements
+
 This plugin requires Craft CMS 5.0.0 or later.
 
 ## Features
 
 ![CleanShot 2025-06-19 at 16 53 21](https://github.com/user-attachments/assets/dc8c3c42-e72f-4414-89be-1e5b677be020)
 
-
 ## Installation
 
 1. Open your terminal and go to your Craft project:
+
    ```bash
    cd /path/to/project
    ```
 
 2. Install via Composer:
+
    ```bash
    composer require statikbe/craft-config-values
    ```
 
 3. Install the plugin via Craft CLI:
+
    ```bash
    ./craft plugin/install config-values-field
    ```
@@ -43,7 +46,24 @@ return [
             'outline' => 'Outline Button',
             'link' => 'Text Link',
         ],
-        
+
+        // Basic dropdown but with values differing per site
+	// Important: If you want to configure datasets per site you should always make at minimum a dataset for the primary site as fallback
+        'ctaStylesSiteDependent' => [
+            'primarySiteHandle' => [
+                'primary' => 'Primary Button',
+                'secondary' => 'Secondary Button',
+                'outline' => 'Outline Button',
+                'link' => 'Text Link',
+            ],
+            'secondarySiteHandle' => [
+                'alternative' => 'Primary Button',
+                'secondary alternative' => 'Secondary Button',
+                'outline' => 'Outline Button',
+                'link' => 'Text Link',
+            ],
+        ],
+
         // Color options (supports hex values)
         'brandColors' => [
             '' => 'none',      // Special: shows striped pattern
@@ -53,7 +73,7 @@ return [
             'accent' => '#F59E0B',
             'danger' => '#EF4444',
         ],
-        
+
         // Gradient colors (2-3 colors)
         'headerColors' => [
             '' => 'none',      // Special: shows striped pattern
@@ -62,7 +82,7 @@ return [
             'ocean' => ['#667eea', '#764ba2', '#f093fb'],
             'forest' => ['#134e5e', '#71b280'],
         ],
-        
+
         // Shape options (requires SVG files)
         'icons' => [
             'path' => '@webroot/assets/icons/',
@@ -84,16 +104,21 @@ return [
 The plugin supports 5 different field display types:
 
 ### 1. Dropdown
+
 Standard select dropdown for single selection.
 
 ### 2. Radio Buttons
+
 Radio button group for single selection with visual options.
 
 ### 3. Checkboxes
+
 Multiple selection checkboxes for choosing multiple values.
 
 ### 4. Color
+
 Visual color picker with special features:
+
 - Hex colors: Display as color swatches
 - Gradients: Support 2-3 color arrays for gradient backgrounds
 - Special values:
@@ -101,7 +126,9 @@ Visual color picker with special features:
   - `'none'`: Shows striped "no color" pattern
 
 ### 5. Shape
+
 SVG shape selector for icon/graphic selection:
+
 - Requires `path` configuration pointing to SVG directory
 - Uses `shapes` array to map filenames to labels
 - Validates file existence
@@ -109,9 +136,6 @@ SVG shape selector for icon/graphic selection:
   - `'random'`
   - `'none'`
 
-
-
-
----
+______________________________________________________________________
 
 Brought to you by [Statik.be](https://www.statik.be)
