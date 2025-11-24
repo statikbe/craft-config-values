@@ -66,12 +66,12 @@ return [
 
         // Color options (supports hex values)
         'brandColors' => [
-            '' => 'none',      // Special: shows striped pattern
+ 			'' => 'none',      // Special: shows striped pattern
             'random' => 'random',  // Special: shows rainbow gradient
-            'primary' => '#3B82F6',
-            'secondary' => '#10B981',
-            'accent' => '#F59E0B',
-            'danger' => '#EF4444',
+            'primary' => ['#3B82F6'],
+            'secondary' => ['#10B981'],
+            'accent' => ['#F59E0B'],
+            'danger' => ['#EF4444'],
         ],
 
         // Gradient colors (2-3 colors)
