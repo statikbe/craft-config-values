@@ -64,12 +64,12 @@ return [
             ],
         ],
 
-        // Color options (supports hex values)
+        // Color options (supports hex values and CSS variables)
         'brandColors' => [
  			'' => 'none',      // Special: shows striped pattern
             'random' => 'random',  // Special: shows rainbow gradient
             'primary' => ['#3B82F6'],
-            'secondary' => ['#10B981'],
+            'secondary' => ['var(--color-secondary)'],
             'accent' => ['#F59E0B'],
             'danger' => ['#EF4444'],
         ],
@@ -119,7 +119,7 @@ Multiple selection checkboxes for choosing multiple values.
 
 Visual color picker with special features:
 
-- Hex colors: Display as color swatches
+- Hex colors and CSS variables (`var(--color-name)`): Display as color swatches
 - Gradients: Support 2-3 color arrays for gradient backgrounds
 - Special values:
   - `'random'`: Shows rainbow gradient indicator
