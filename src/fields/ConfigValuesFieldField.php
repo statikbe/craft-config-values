@@ -147,7 +147,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
     {
         $trimmedValue = trim($value);
         return preg_match('/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $trimmedValue) === 1
-            || preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|var\(\s*--[\w-]+\s*\))\s*)?\)$/', $trimmedValue) === 1;
+            || preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|var\(\s*--[\w-]+\s*(?:,\s*#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\s*)?\))\s*)?\)$/', $trimmedValue) === 1;
     }
 
     /**
