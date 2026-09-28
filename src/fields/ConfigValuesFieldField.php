@@ -96,7 +96,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                     if (is_array($option)) {
                         foreach ($option as $value) {
                             if (!$this->isValidColorValue($value)) {
-                                $this->addError("$attribute", "Each option must contain at least a hex value or CSS var() when type is 'color'");
+                                $this->addError("$attribute", "Each option must be a hex value or CSS var() when type is 'color'");
                                 return;
                             }
                         }
@@ -145,7 +145,8 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
 
     private function isValidColorValue(string $value): bool
     {
-        return str_starts_with($value, '#') || preg_match('/^var\(\s*--[-a-zA-Z0-9_]+(?:\s*,\s*.+)?\)$/', $value) === 1;
+        $trimmedValue = trim($value);
+        return str_starts_with($trimmedValue, '#') || (str_starts_with($trimmedValue, 'var(') && str_ends_with($trimmedValue, ')'));
     }
 
     /**
