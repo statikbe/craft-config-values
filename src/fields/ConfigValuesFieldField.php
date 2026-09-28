@@ -146,7 +146,7 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
     private function isValidColorValue(string $value): bool
     {
         $trimmedValue = trim($value);
-        return str_starts_with($trimmedValue, '#') || preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*[\w\s#%.,()\-]+\s*)?\)$/', $trimmedValue) === 1;
+        return str_starts_with($trimmedValue, '#') || preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#[0-9a-fA-F]{3,8}|var\(\s*--[\w-]+\s*\))\s*)?\)$/', $trimmedValue) === 1;
     }
 
     /**
