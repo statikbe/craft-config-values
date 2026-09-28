@@ -146,8 +146,13 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
     private function isValidColorValue(string $value): bool
     {
         $trimmedValue = trim($value);
-        return preg_match('/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $trimmedValue) === 1
-            || preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|var\(\s*--[\w-]+\s*(?:,\s*#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\s*)?\))\s*)?\)$/', $trimmedValue) === 1;
+        $hexPattern = '(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})';
+
+        if (preg_match('/^#' . $hexPattern . '$/', $trimmedValue) === 1) {
+            return true;
+        }
+
+        return preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#' . $hexPattern . '|var\(\s*--[\w-]+\s*(?:,\s*#' . $hexPattern . '\s*)?\))\s*)?\)$/', $trimmedValue) === 1;
     }
 
     /**
