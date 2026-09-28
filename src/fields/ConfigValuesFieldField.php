@@ -95,8 +95,8 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
                 foreach ($data as $key => $option) {
                     if (is_array($option)) {
                         foreach ($option as $value) {
-                            if (strpos($value, '#') !== 0) {
-                                $this->addError("$attribute", "Each option must contain at least hex value when type is 'color'");
+                            if (!$this->isValidColorValue($value)) {
+                                $this->addError("$attribute", "Each option must be a hex value or CSS var() when type is 'color'");
                                 return;
                             }
                         }
@@ -141,6 +141,18 @@ class ConfigValuesFieldField extends Field implements InlineEditableFieldInterfa
             default:
                 $this->addError($attribute, 'Invalid type.');
         }
+    }
+
+    private function isValidColorValue(string $value): bool
+    {
+        $trimmedValue = trim($value);
+        $hexPattern = '(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})';
+
+        if (preg_match('/^#' . $hexPattern . '$/', $trimmedValue) === 1) {
+            return true;
+        }
+
+        return preg_match('/^var\(\s*--[\w-]+\s*(?:,\s*(?:#' . $hexPattern . '|var\(\s*--[\w-]+\s*(?:,\s*#' . $hexPattern . '\s*)?\))\s*)?\)$/', $trimmedValue) === 1;
     }
 
     /**
