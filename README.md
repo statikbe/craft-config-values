@@ -119,7 +119,7 @@ Multiple selection checkboxes for choosing multiple values.
 
 Visual color picker with special features:
 
-- Hex colors and CSS variables (`var(--color-name)`): Display as color swatches
+- Hex colors and CSS variables (`var(--color-name)` or `var(--color-name, #fallback)`): Display as color swatches
 - Gradients: Support 2-3 color arrays for gradient backgrounds using hex values and/or CSS variables
 - Special values:
   - `'random'`: Shows rainbow gradient indicator
